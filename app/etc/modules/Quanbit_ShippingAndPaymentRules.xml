@@ -1,8 +1,0 @@
-<?xml version="1.0" ?><config>
-	<modules>
-		<Quanbit_ShippingAndPaymentRules>
-			<active>false</active>
-			<codePool>community</codePool>
-		</Quanbit_ShippingAndPaymentRules>
-	</modules>
-</config>
