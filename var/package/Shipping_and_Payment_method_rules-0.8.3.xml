@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+    <name>Shipping_and_Payment_method_rules</name>
+    <version>0.8.3</version>
+    <stability>beta</stability>
+    <license uri="http://www.opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Allow advanced filtering of Shipping and Payment methods based on shopping cart information</summary>
+    <description>Allow advanced filtering of Shipping and Payment methods based on shopping cart information. &#xD;
+&#xD;
+This module extends the promotion rules to allow an advanced filtering of Shipping and Payment Methods. </description>
+    <notes>Beta version, tested OK</notes>
+    <authors><author><name>Alejandro Siri</name><user>alexsiri7</user><email>alexsiri7@gmail.com</email></author></authors>
+    <date>2011-09-05</date>
+    <time>18:04:25</time>
+    <contents><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="checkoutrule.xml" hash="6272ff013a665d1746b6357c762c7368"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Quanbit_ShippingAndPaymentRules.xml" hash="58bd74046b6520dad31c4a0caf9834f7"/></dir></target><target name="magecommunity"><dir name="Quanbit"><dir name="ShippingAndPaymentRules"><dir name="Block"><dir name="Promo"><dir name="Checkoutrule"><dir name="Edit"><file name="Form.php" hash="efe57d806d84d3992d02814b2f950fde"/><dir name="Tab"><file name="Actions.php" hash="ea708dfde935113ceabee9ad39b8ef61"/><file name="Conditions.php" hash="ce98537a91e4138b7291b0a830d2de88"/><file name="Labels.php" hash="6f00fd76780653add66155a39ea9ed7b"/><file name="Main.php" hash="44e85dc9a04e5fa9276ec7082ccf97de"/></dir><file name="Tabs.php" hash="b93038ac606b5d510fb912b9d7a10ed9"/></dir><file name="Edit.php" hash="4d935865a3bafdf9382ddfc0f209c935"/><file name="Grid.php" hash="c4c294c0980c55ea10cfad0dbea4dd65"/></dir><file name="Checkoutrule.php" hash="e662e2239757a145ed0c98c880df3e6f"/></dir></dir><dir name="Helper"><file name="Data.php" hash="11d350c132581afb86e1e333516c6e66"/><file name="Url.php" hash="009a2a1bc72a53fdd46fb0becbc7d22b"/></dir><dir name="Model"><dir name="Mysql4"><dir name="Rule"><file name="Collection.php" hash="fdca606e535f72a1a3e615d9916e858b"/></dir><file name="Rule.php" hash="c581e12a7338d6b8249faba59ff3d2e0"/></dir><dir name="Observer"><file name="Filter.php" hash="3a33d8bf78f450b326f7ff67aeb23371"/></dir><dir name="Quote"><file name="Address.php" hash="eac9b6ef083f64a95982ef44c2e2595d"/></dir><file name="Rule.php" hash="6473cd503c8d56a0f58875c75c3d0bcf"/><dir name="Shipping"><file name="Allcarriers.php" hash="9ccf943d710e66bb19f30a539fc4f283"/><file name="Shipping.php" hash="07af5006932ce9cee181ef7b1791086d"/></dir></dir><dir name="controllers"><dir name="Promo"><file name="CheckoutruleController.php" hash="3241ed5cfb364751257ae5627722b34b"/></dir></dir><dir name="etc"><file name="config.xml" hash="e244fca94000cdcf5d4690cbfa99e6bf"/></dir><dir name="sql"><dir name="shippingandpaymentrules_setup"><file name="mysql4-install-0.1.php" hash="2b0ce0cb703921202798e250dceea6a7"/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
