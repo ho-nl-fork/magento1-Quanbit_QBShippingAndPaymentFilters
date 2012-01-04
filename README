@@ -1,0 +1,22 @@
+Quanbit's Shipping And Payment Filter
+QBShippingAndPaymentFilter
+
+This Module allows you to enable or disable payment and shipping methods, setting up rules that take the content's of the checkout cart.
+
+For instance: You can disallow "Personal Delivery" for orders to be shipped outside your city. Or enable Paypal payment only to people who bought from you products from the "Ebook" category. Or whatever. 
+
+How to use: After installing (we recommend using Magento Connect's installer), acces the module on the admin interface of Magento, on
+
+"Promotions" > "Checkout Rules".
+
+There, you can add any rules you need. These will be applied on the cart (either when creating an order from the admin interface or from the frontend). 
+
+Changelog: 0.8.4
+In this release:
+- Fixed Deleting of the rules
+- Fixed problem that sometimes provoked a blank page on cart view.  
+
+Known Issues:
+- Enabling shipping methods is not working. You'll need to use it the other way around (enabling in the config the shipping method, and then disabling it on a rule).
+- Rules based on product attributes combination is not working. It's not giving an error, it's just ignoring that rule. 
+- Adding a label to the rule provokes an error that prevents the rule from saving. 

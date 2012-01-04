@@ -1,0 +1,9 @@
+#class_name_path:
+#  name: string
+#  weight: number
+#  start: date
+#  references: other_class_name_path
+#  references_other: 
+#    type: reference
+#    class: other_class_name_path
+#    field: other_field
