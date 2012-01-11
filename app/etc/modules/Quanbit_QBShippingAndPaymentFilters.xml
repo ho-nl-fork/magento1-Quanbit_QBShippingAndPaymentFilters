@@ -1,7 +1,7 @@
 <?xml version="1.0" ?><config>
 	<modules>
 		<Quanbit_QBShippingAndPaymentFilters>
-			<active>false</active>
+			<active>true</active>
 			<codePool>community</codePool>
 		</Quanbit_QBShippingAndPaymentFilters>
 	</modules>
