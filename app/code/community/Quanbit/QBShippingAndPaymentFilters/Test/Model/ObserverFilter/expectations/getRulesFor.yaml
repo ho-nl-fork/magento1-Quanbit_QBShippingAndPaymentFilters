@@ -1,0 +1,8 @@
+purchaseorder-disable-payment:
+  rule_name: disable purchaseorder
+checkmo-enable-payment:
+  rule_name: enable checkmo
+dhl-disable-shipping:
+  rule_name: disable dhl
+flatrate-enable-shipping:
+  rule_name: enable flatrate

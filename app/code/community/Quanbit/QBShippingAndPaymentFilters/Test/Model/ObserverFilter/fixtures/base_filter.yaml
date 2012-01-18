@@ -1,0 +1,73 @@
+eav:
+  catalog_product:
+    - entity_id: 1
+    - entity_id: 2
+      category_ids: 10
+
+config:
+  default/payment/checkmo/active: 0
+  default/payment/paypal_billing_agreement/active: 0
+  default/payment/purchaseorder/active: 1
+  default/shipping/dhl/active: 0
+  default/shipping/flatrate/active: 1
+tables:
+  checkoutrule/checkoutrule:
+    - rule_id: 1
+      is_active: 1
+      name: disable purchaseorder
+      conditions_serialized: a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_address";s:9:"attribute";s:13:"base_subtotal";s:8:"operator";s:2:"==";s:5:"value";s:3:"100";s:18:"is_value_processed";b:0;}}}'
+      simple_action: disable_payment_method
+      payment_methods_ids: purchaseorder
+      website_ids: 1
+    - rule_id: 2
+      is_active: 1
+      name: enable checkmo
+      conditions_serialized: 'a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_address";s:9:"attribute";s:10:"country_id";s:8:"operator";s:2:"==";s:5:"value";s:2:"AR";s:18:"is_value_processed";b:0;}}}'
+      simple_action: enable_payment_method
+      payment_methods_ids: checkmo
+      website_ids: 1
+    - rule_id: 3
+      is_active: 1
+      name: disable dhl
+      conditions_serialized: 'a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:7:{s:4:"type";s:38:"salesrule/rule_condition_product_found";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:2:"10";s:18:"is_value_processed";b:0;}}}}}'
+      simple_action: disable_shipping_method
+      shipping_methods_ids: dhl
+      website_ids: 1
+    - rule_id: 4
+      is_active: 1
+      name: enable flatrate
+      conditions_serialized: 'a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:7:{s:4:"type";s:38:"salesrule/rule_condition_product_found";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_product";s:9:"attribute";s:14:"quote_item_qty";s:8:"operator";s:2:"==";s:5:"value";s:1:"2";s:18:"is_value_processed";b:0;}}}}}'
+      simple_action: enable_shipping_method
+      shipping_methods_ids: flatrate
+      website_ids: 1
+  sales/quote:
+    #This order should NOT trigger the events
+    - entity_id: 1 
+      subtotal: "150"
+      store_id: 1
+    #This order SHOULD trigger the events
+    - entity_id: 2
+      subtotal: "100"
+      store_id: 1
+  sales/quote_address:
+    - address_id: 1
+      address_type: shipping
+      quote_id: 1
+      total_qty: 1
+      base_subtotal: "150"
+      country_id: AR
+    - address_id: 2
+      address_type: shipping
+      quote_id: 2
+      total_qty: 2
+      base_subtotal: "100"
+      country_id: BR
+  sales/quote_item:
+    - entity_id: 1
+      quote_id: 1
+      qty: 2
+      product_id: 1
+    - entity_id: 2
+      qty: 1    
+      quote_id: 2
+      product_id: 2

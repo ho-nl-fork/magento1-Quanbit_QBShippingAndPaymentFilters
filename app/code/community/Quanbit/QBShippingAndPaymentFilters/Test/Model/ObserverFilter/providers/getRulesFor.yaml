@@ -1,0 +1,16 @@
+- #The rules do not apply
+  - purchaseorder
+  - disable
+  - payment
+- #The rules do not apply
+  - checkmo
+  - enable
+  - payment
+- #The rules apply
+  - dhl
+  - disable
+  - shipping
+- #The rules apply and make no changes
+  - flatrate
+  - enable
+  - shipping
