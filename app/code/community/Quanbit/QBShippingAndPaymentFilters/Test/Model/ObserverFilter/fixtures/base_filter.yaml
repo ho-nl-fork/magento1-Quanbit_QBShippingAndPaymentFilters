@@ -2,7 +2,7 @@ eav:
   catalog_product:
     - entity_id: 1
     - entity_id: 2
-      category_ids: 10
+      price: 10
 
 config:
   default/payment/checkmo/active: 0
@@ -29,7 +29,7 @@ tables:
     - rule_id: 3
       is_active: 1
       name: disable dhl
-      conditions_serialized: 'a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:7:{s:4:"type";s:38:"salesrule/rule_condition_product_found";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:2:"10";s:18:"is_value_processed";b:0;}}}}}'
+      conditions_serialized: 'a:7:{s:4:"type";s:32:"salesrule/rule_condition_combine";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:7:{s:4:"type";s:38:"salesrule/rule_condition_product_found";s:9:"attribute";N;s:8:"operator";N;s:5:"value";s:1:"1";s:18:"is_value_processed";N;s:10:"aggregator";s:3:"all";s:10:"conditions";a:1:{i:0;a:5:{s:4:"type";s:32:"salesrule/rule_condition_product";s:9:"attribute";s:5:"price";s:8:"operator";s:2:"==";s:5:"value";s:2:"10";s:18:"is_value_processed";b:0;}}}}}'
       simple_action: disable_shipping_method
       shipping_methods_ids: dhl
       website_ids: 1
