@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Quanbit_QBShippingAndPaymentFilters>
-            <version>0.1</version>
+            <version>0.2</version>
         </Quanbit_QBShippingAndPaymentFilters>
     </modules>      
     <global>
@@ -24,27 +24,7 @@
                 <connection>
                     <use>core_read</use>
                 </connection>
-            </qbshippingandpaymentfilters_read>
-            
-            
-            <checkoutrule_setup>
-                <setup>
-                    <module>Quanbit_QBShippingAndPaymentFilters</module>
-                </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
-            </checkoutrule_setup>
-            <checkoutrule_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
-            </checkoutrule_write>
-            <checkoutrule_read>
-                <connection>
-                    <use>core_read</use>
-                </connection>
-            </checkoutrule_read>
+            </qbshippingandpaymentfilters_read>            
         </resources>              
         <models>
             <shipping>
@@ -67,6 +47,9 @@
                     <checkoutrule>
                         <table>checkoutrule</table>
                     </checkoutrule>
+                    <label>
+                        <table>checkoutrule_label</table>
+                    </label>
                 </entities>
             </checkoutrule_mysql4>
         </models>

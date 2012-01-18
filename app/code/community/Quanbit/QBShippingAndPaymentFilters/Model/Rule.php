@@ -96,12 +96,12 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Rul
 
     public function getConditionsInstance()
     {
-        return Mage::getModel('salesrule/rule_condition_combine');
+        return Mage::getModel('checkoutrule/rule_condition_combine');
     }
 
     public function getActionsInstance()
     {
-        return Mage::getModel('salesrule/rule_condition_product_combine');
+        return Mage::getModel('checkoutrule/rule_condition_product_combine');
     }
 
     public function toString($format='')
@@ -261,7 +261,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Rul
     protected function _getUsedAttributes($serializedString)
     {
         $result = array();
-        if (preg_match_all('~s:32:"salesrule/rule_condition_product";s:9:"attribute";s:\d+:"(.*?)"~s',
+        if (preg_match_all('~s:32:"checkoutrule/rule_condition_product";s:9:"attribute";s:\d+:"(.*?)"~s',
             $serializedString, $matches)){
             foreach ($matches[1] as $offset => $attributeCode) {
                 $result[] = $attributeCode;

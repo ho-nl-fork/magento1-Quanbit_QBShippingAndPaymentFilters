@@ -77,7 +77,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule extends Mage_Core_Mo
     {
         $delete = array();
         $save = array();
-        $table = $this->getTable('salesrule/label');
+        $table = $this->getTable('checkoutrule/label');
         $adapter = $this->_getWriteAdapter();
 
         foreach ($labels as $storeId => $label) {
@@ -106,7 +106,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule extends Mage_Core_Mo
     public function getStoreLabels($ruleId)
     {
         $select = $this->_getReadAdapter()->select()
-            ->from($this->getTable('salesrule/label'), array('store_id', 'label'))
+            ->from($this->getTable('checkoutrule/label'), array('store_id', 'label'))
             ->where('rule_id=?', $ruleId);
         return $this->_getReadAdapter()->fetchPairs($select);
     }
@@ -121,7 +121,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule extends Mage_Core_Mo
     public function getStoreLabel($ruleId, $storeId)
     {
         $select = $this->_getReadAdapter()->select()
-            ->from($this->getTable('salesrule/label'), 'label')
+            ->from($this->getTable('checkoutrule/label'), 'label')
             ->where('rule_id=?', $ruleId)
             ->where('store_id IN(?)', array($storeId, 0))
             ->order('store_id DESC');
