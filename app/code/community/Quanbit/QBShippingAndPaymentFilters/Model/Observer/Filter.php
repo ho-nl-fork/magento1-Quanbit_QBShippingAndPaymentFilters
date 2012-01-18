@@ -2,11 +2,6 @@
 class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
 {
         public function getRulesFor($website_id, $method, $action, $method_type){            
-<<<<<<< HEAD
-=======
-             //If any disabling rules is active and valid, then disable
-             //Mage::log("=====Checking DISABLE PAYMENT rules ====" .$method->getCode(). " for ".$website_id);
->>>>>>> 52faa9c1e3b2a1db50db47d111565accb8bff50e
              return Mage::getResourceModel("checkoutrule/rule_collection")->getRowsFor($website_id, $method, $action, $method_type);            
         }
         public function rulesMatch ($rules, $quote){
