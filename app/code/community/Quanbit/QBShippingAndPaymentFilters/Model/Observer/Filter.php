@@ -51,19 +51,11 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
              $quote->setQuote($quote);
              $website_id = $quote->getStore()->getWebsiteId();
              $result = $event->getResult();
-<<<<<<< HEAD
              $rules = $this->getRulesFor($website_id, $method, "disable", $method_type);
              if ($this->rulesMatch($rules, $quote)){
                  $result->isAvailable=false;
              }
              $rules = $this->getRulesFor($website_id, $method, "enable", $method_type);
-=======
-             $rules = $this->getRulesFromEvent($website_id, $method, "disable", $method_type);
-             if ($this->rulesMatch($rules, $quote)){
-                 $result->isAvailable=false;
-             }
-             $rules = $this->getRulesFromEvent($website_id, $method, "enable", $method_type);
->>>>>>> 52faa9c1e3b2a1db50db47d111565accb8bff50e
              if ($this->rulesMatch($rules, $quote)){
                  $result->isAvailable=true;
              }
