@@ -2,6 +2,11 @@
 class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
 {
         public function getRulesFor($website_id, $method, $action, $method_type){            
+<<<<<<< HEAD
+=======
+             //If any disabling rules is active and valid, then disable
+             //Mage::log("=====Checking DISABLE PAYMENT rules ====" .$method->getCode(). " for ".$website_id);
+>>>>>>> 52faa9c1e3b2a1db50db47d111565accb8bff50e
              return Mage::getResourceModel("checkoutrule/rule_collection")->getRowsFor($website_id, $method, $action, $method_type);            
         }
         public function rulesMatch ($rules, $quote){
@@ -51,11 +56,19 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
              $quote->setQuote($quote);
              $website_id = $quote->getStore()->getWebsiteId();
              $result = $event->getResult();
+<<<<<<< HEAD
              $rules = $this->getRulesFor($website_id, $method, "disable", $method_type);
              if ($this->rulesMatch($rules, $quote)){
                  $result->isAvailable=false;
              }
              $rules = $this->getRulesFor($website_id, $method, "enable", $method_type);
+=======
+             $rules = $this->getRulesFromEvent($website_id, $method, "disable", $method_type);
+             if ($this->rulesMatch($rules, $quote)){
+                 $result->isAvailable=false;
+             }
+             $rules = $this->getRulesFromEvent($website_id, $method, "enable", $method_type);
+>>>>>>> 52faa9c1e3b2a1db50db47d111565accb8bff50e
              if ($this->rulesMatch($rules, $quote)){
                  $result->isAvailable=true;
              }
