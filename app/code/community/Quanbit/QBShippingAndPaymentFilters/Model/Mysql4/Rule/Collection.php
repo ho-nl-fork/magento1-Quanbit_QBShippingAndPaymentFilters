@@ -34,7 +34,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection extends M
     }
     public function getRowsFor($websiteId, $method_id, $action, $method_type){
         $this->getSelect()->where('is_active=1');
-        $this->getSelect()->where('simple_action=?', $action);
+        $this->getSelect()->where('simple_action=?', $action. "_".$method_type. "_method");
         if ($websiteId){
             $this->getSelect()->where('find_in_set(?, website_ids)', (int)$websiteId);
         }
