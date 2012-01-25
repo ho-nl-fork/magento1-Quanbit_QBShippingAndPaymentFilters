@@ -12,10 +12,6 @@ class Quanbit_QBShippingAndPaymentFilters_Test_Model_ObserverFilter extends Ecom
       $q->load($quote_id);
       return $q;
   }
-  private function getPaymentModel($payment_code){
-      return Mage::getModel(Mage::getStoreConfig('payment/'.$payment_code."/model"));
-  }
-  
   /**
    * @test
    * @loadFixture base_filter
@@ -58,6 +54,5 @@ class Quanbit_QBShippingAndPaymentFilters_Test_Model_ObserverFilter extends Ecom
       $match = $this->observer->rulesMatch(array($rule), $quote);
       $this->assertEquals($result, $match);
   }
-
 }
 ?>

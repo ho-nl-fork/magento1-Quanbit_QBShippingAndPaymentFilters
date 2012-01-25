@@ -1,0 +1,35 @@
+config:
+  default/shipping/freeshipping/active: 1
+  default/shipping/flatrate/active: 0
+tables:
+  sales/quote:
+    #This order should NOT trigger the events
+    - entity_id: 1 
+      subtotal: "150"
+      store_id: 1
+    #This order SHOULD trigger the events
+    - entity_id: 2
+      subtotal: "100"
+      store_id: 1
+  sales/quote_address:
+    - address_id: 1
+      address_type: shipping
+      quote_id: 1
+      total_qty: 1
+      base_subtotal: "150"
+      country_id: AR
+    - address_id: 2
+      address_type: shipping
+      quote_id: 2
+      total_qty: 2
+      base_subtotal: "100"
+      country_id: BR
+  sales/quote_item:
+    - entity_id: 1
+      quote_id: 1
+      qty: 2
+      product_id: 1
+    - entity_id: 2
+      qty: 1    
+      quote_id: 2
+      product_id: 2
