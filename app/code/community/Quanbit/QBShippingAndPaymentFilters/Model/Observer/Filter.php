@@ -31,7 +31,10 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
 	 * @param Varien_Event_Observer $observer
 	 */
         public function paymentMethods(Varien_Event_Observer $observer){
-            $this->applyRules($observer, "payment", $observer->getEvent()->getMethodInstance()->getCode());
+            $this->applyRules($observer, "payment", $this->getPaymentCode($observer));
+        }
+        public function getPaymentCode($observer){
+            return $observer->getEvent()->getMethodInstance()->getCode();
         }
         /**
 	 * Filters the shipping method if it's not enabled
@@ -40,8 +43,11 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
 	 */
 	public function shippingMethods(Varien_Event_Observer $observer)
 	{
-             $this->applyRules($observer, "shipping", $observer->getEvent()->getCarrierCode());
+             $this->applyRules($observer, "shipping", $this->getShippingCode($observer));
 	}
+        public function getShippingCode($observer){
+            return $observer->getEvent()->getCarrierCode();
+        }
         public function applyRules($observer, $method_type, $method)
 	{
              $event = $observer->getEvent();

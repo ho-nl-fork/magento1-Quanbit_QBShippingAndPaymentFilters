@@ -23,6 +23,7 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Shipping_Shipping extends Mage_S
         ));
         
         if (!$checkResult->isAvailable) return false;
+        Mage::app()->getStore($storeId)->setConfig('carriers/'.$carrierCode.'/active', true);
 
         $className = Mage::getStoreConfig('carriers/'.$carrierCode.'/model', $storeId);
         if (!$className) {
