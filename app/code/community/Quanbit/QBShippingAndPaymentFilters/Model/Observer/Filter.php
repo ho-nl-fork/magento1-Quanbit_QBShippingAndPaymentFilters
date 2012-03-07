@@ -11,14 +11,18 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
                 $address = $quote->getShippingAddress();
             }
             foreach ($rules as $rule){
-                $rule->afterLoad();                
-                try { 
-		        if ($rule->validate($address)){
-		            return true;
-		        }
-		} catch (Exception $e){
-			Mage::logException($e);
-		}
+                if (!isset($this->cachedResults[$rule->getId()][$quote->getId()])){                 
+                    $rule->afterLoad();                
+                    try { 
+                        $this->cachedResults[$rule->getId()][$quote->getId()] = $rule->validate($address);
+                    } catch (Exception $e){
+                        $this->cachedResults[$rule->getId()][$quote->getId()] = false;
+                        Mage::logException($e);
+                    }
+                }
+                if ($this->cachedResults[$rule->getId()][$quote->getId()]){
+                    return true;
+                }
             }
             return false;
         }
@@ -54,17 +58,22 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
              if (!$this->shouldCheck($event)) return;
              $data =  $event ->getData();
              $quote = $data["quote"];
-             $quote->setQuote($quote);
-             $website_id = $quote->getStore()->getWebsiteId();
-             $result = $event->getResult();
-             $rules = $this->getRulesFor($website_id, $method, "disable", $method_type);
-             if ($this->rulesMatch($rules, $quote)){
-                 $result->isAvailable=false;
+             if (!isset($this->cachedMethodResults[$method_type][$method][$quote->getId()])){
+                foreach ($quote->getAllItems() as $item){
+                    $item->setData('product',null);
+                }
+                $website_id = $quote->getStore()->getWebsiteId();
+                $result = $event->getResult();
+                $rules = $this->getRulesFor($website_id, $method, "disable", $method_type);
+                if ($this->rulesMatch($rules, $quote)){
+                    $finalResult=false;
+                }
+                $rules = $this->getRulesFor($website_id, $method, "enable", $method_type);
+                if ($this->rulesMatch($rules, $quote)){
+                    $finalResult=true;
+                }
+                $this->cachedMethodResults[$method_type][$method][$quote->getId()] = $finalResult;
              }
-             $rules = $this->getRulesFor($website_id, $method, "enable", $method_type);
-             if ($this->rulesMatch($rules, $quote)){
-                 $result->isAvailable=true;
-             }
-	}
-	
+             $result->isAvailable = $this->cachedMethodResults[$method_type][$method][$quote->getId()];
+	}	
 }
