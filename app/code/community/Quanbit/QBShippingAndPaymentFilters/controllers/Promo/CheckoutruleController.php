@@ -225,6 +225,9 @@ class Quanbit_QBShippingAndPaymentFilters_Promo_CheckoutruleController extends M
 
         if ($model instanceof Mage_Rule_Model_Condition_Abstract) {
             $model->setJsFormObject($this->getRequest()->getParam('form'));
+	    if (!is_array($model->getValueOption())){
+		$model->setValueOption(array());
+            }
             $html = $model->asHtmlRecursive();
         } else {
             $html = '';

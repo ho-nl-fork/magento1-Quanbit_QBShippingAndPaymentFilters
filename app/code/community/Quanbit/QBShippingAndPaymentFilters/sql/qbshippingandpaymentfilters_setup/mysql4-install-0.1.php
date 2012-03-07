@@ -1,7 +1,10 @@
 <?php
 $installer = $this;
 $installer->startSetup(); 
-$installer->run("CREATE TABLE {$this->getTable('checkoutrule')} (
+$installer->run("
+DROP TABLE IF EXISTS {$this->getTable('checkoutrule')};
+        
+CREATE TABLE {$this->getTable('checkoutrule')} (
  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `name` varchar(255) NOT NULL DEFAULT '',
  `description` text NOT NULL,

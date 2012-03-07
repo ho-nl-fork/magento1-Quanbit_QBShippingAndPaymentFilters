@@ -14,6 +14,6 @@ CREATE TABLE IF NOT EXISTS `{$this->getTable('checkoutrule/label')}` (
 
 ALTER TABLE `{$this->getTable('checkoutrule/label')}`
   ADD CONSTRAINT FOREIGN KEY (`rule_id`) REFERENCES `{$this->getTable('checkoutrule')}` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core_store')}` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ");
 $installer->endSetup();
