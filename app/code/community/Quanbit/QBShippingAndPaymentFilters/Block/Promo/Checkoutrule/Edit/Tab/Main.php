@@ -164,11 +164,6 @@ class Quanbit_QBShippingAndPaymentFilters_Block_Promo_Checkoutrule_Edit_Tab_Main
             'values'    => $customerGroups,
         ));
 
-        $fieldset->addField('uses_per_customer', 'text', array(
-            'name' => 'uses_per_customer',
-            'label' => Mage::helper('checkoutrule')->__('Uses per Customer'),
-        ));
-
         $dateFormatIso = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
         $fieldset->addField('from_date', 'date', array(
             'name'   => 'from_date',
@@ -190,16 +185,6 @@ class Quanbit_QBShippingAndPaymentFilters_Block_Promo_Checkoutrule_Edit_Tab_Main
         $fieldset->addField('sort_order', 'text', array(
             'name' => 'sort_order',
             'label' => Mage::helper('checkoutrule')->__('Priority'),
-        ));
-
-        $fieldset->addField('is_rss', 'select', array(
-            'label'     => Mage::helper('checkoutrule')->__('Public In RSS Feed'),
-            'title'     => Mage::helper('checkoutrule')->__('Public In RSS Feed'),
-            'name'      => 'is_rss',
-            'options'   => array(
-                '1' => Mage::helper('checkoutrule')->__('Yes'),
-                '0' => Mage::helper('checkoutrule')->__('No'),
-            ),
         ));
 
         if(!$model->getId()){

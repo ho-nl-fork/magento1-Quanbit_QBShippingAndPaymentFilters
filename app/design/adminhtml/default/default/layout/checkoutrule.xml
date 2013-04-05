@@ -15,11 +15,11 @@
                 <block type="checkoutrule/promo_checkoutrule_edit_tab_main" name="promo_checkoutrule_edit_tab_main" />
                 <block type="checkoutrule/promo_checkoutrule_edit_tab_conditions" name="promo_checkoutrule_edit_tab_conditions"/>
                 <block type="checkoutrule/promo_checkoutrule_edit_tab_actions" name="promo_checkoutrule_edit_tab_actions"/>
-                <block type="checkoutrule/promo_checkoutrule_edit_tab_labels" name="promo_checkoutrule_edit_tab_labels"/>
+                <!--<block type="checkoutrule/promo_checkoutrule_edit_tab_labels" name="promo_checkoutrule_edit_tab_labels"/>-->
                 <action method="addTab"><name>main_section</name><block>promo_checkoutrule_edit_tab_main</block></action>
                 <action method="addTab"><name>conditions_section</name><block>promo_checkoutrule_edit_tab_conditions</block></action>
                 <action method="addTab"><name>actions_section</name><block>promo_checkoutrule_edit_tab_actions</block></action>
-                <action method="addTab"><name>labels_section</name><block>promo_checkoutrule_edit_tab_labels</block></action>
+                <!--<action method="addTab"><name>labels_section</name><block>promo_checkoutrule_edit_tab_labels</block></action>-->
             </block>
         </reference>
         <reference name="content">

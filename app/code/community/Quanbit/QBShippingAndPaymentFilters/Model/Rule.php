@@ -25,7 +25,7 @@
  */
 
 
-class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Rule
+class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Abstract
 {
     /**
      * Rule type actions
@@ -180,6 +180,14 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Rul
         if (is_array($this->getShippingMethodsIds())) {
             $this->setShippingMethodsIds(join(',', $this->getShippingMethodsIds()));
         }
+
+        if (is_array($this->getCustomerGroupIds())) {
+            $this->setCustomerGroupIds(join(',', $this->getCustomerGroupIds()));
+        }
+
+        if (is_array($this->getWebsiteIds())) {
+            $this->setWebsiteIds(join(',', $this->getWebsiteIds()));
+        }
     }
     
     /**
@@ -228,14 +236,21 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Rule extends Mage_Rule_Model_Rul
 
     protected function _afterLoad()
     {
-        parent::_afterLoad();    
-        $paymentMethodsIds = $this->_getData('payment_methods_ids');
-        if (is_string($paymentMethodsIds)) {
-            $this->setPaymentMethodsIds(explode(',', $paymentMethodsIds));
+        parent::_afterLoad();
+        if (is_string($this->_getData('payment_methods_ids'))) {
+            $this->setPaymentMethodsIds(explode(',', $this->_getData('payment_methods_ids')));
         }
-        $shippingMethodsIds = $this->_getData('shipping_methods_ids');
-        if (is_string($shippingMethodsIds)) {
-            $this->setShippingMethodsIds(explode(',', $shippingMethodsIds));
+
+        if (is_string($this->_getData('shipping_methods_ids'))) {
+            $this->setShippingMethodsIds(explode(',', $this->_getData('shipping_methods_ids')));
+        }
+
+        if (is_string($this->_getData('customer_group_ids'))) {
+            $this->setCustomerGroupIds(explode(',', $this->_getData('customer_group_ids')));
+        }
+
+        if (is_string($this->_getData('website_ids'))) {
+            $this->setWebsiteIds(explode(',', $this->_getData('website_ids')));
         }
     }
     /**

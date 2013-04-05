@@ -41,7 +41,9 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Shipping_Allcarriers
             if (!$carrierModel->isActive() && (bool)$isActiveOnlyFlag === true) {
                 continue;
             }
-            $carrierTitle = Mage::getStoreConfig('carriers/'.$carrierCode.'/title');
+            $carrierTitle = Mage::getStoreConfig('carriers/'.$carrierCode.'/title')
+                            ? Mage::getStoreConfig('carriers/'.$carrierCode.'/title')
+                            : $carrierCode;
             $methods[$carrierCode] = array(
                 'label'   => $carrierTitle,
                 'value' => $carrierCode,

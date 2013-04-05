@@ -1,79 +1,108 @@
 <?php
 class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
 {
-        public function getRulesFor($website_id, $method, $action, $method_type){            
-             return Mage::getResourceModel("checkoutrule/rule_collection")->getRowsFor($website_id, $method, $action, $method_type);            
+    protected $_cachedMethodResults = array();
+
+    protected $_cachedResults = array();
+
+
+
+    /**
+     * Filters the payment method if it's not enableds
+     * @param Varien_Event_Observer $observer
+     */
+    public function paymentMethods(Varien_Event_Observer $observer)
+    {
+        $method = $observer->getEvent()->getMethodInstance()->getCode();
+        $this->applyRules($observer, "payment", $method);
+    }
+
+
+    /**
+     * Filters the shipping method if it's not enableds
+     * @param Varien_Event_Observer $observer
+     */
+    public function shippingMethods(Varien_Event_Observer $observer)
+    {
+        var_dump($observer->getEvent());
+        $method = $observer->getEvent()->getCarrierCode();
+        $this->applyRules($observer, "shipping", $method);
+    }
+
+
+    /**
+     * @param $observer
+     * @param $methodType
+     * @param $method
+     */
+    public function applyRules($observer, $methodType, $method)
+    {
+        $event = $observer->getEvent();
+        if ($event->getQuote() == null) {
+            return;
         }
-        public function rulesMatch ($rules, $quote){
-            if ($quote->isVirtual()){
-                $address = $quote->getBillingAddress();
-            } else {
-                $address = $quote->getShippingAddress();
+        /** @var $quote Mage_Sales_Model_Quote */
+        $quote = $event->getQuote();
+        $websiteId  = $quote->getStore()->getWebsiteId();
+        $result = $event->getResult();
+
+        if (!isset($this->_cachedMethodResults[$methodType][$method][$quote->getId()])) {
+            foreach ($quote->getAllItems() as $item) {
+                $item->setData('product', null);
             }
-            foreach ($rules as $rule){
-                if (!isset($this->cachedResults[$rule->getId()][$quote->getId()])){                 
-                    $rule->afterLoad();                
-                    try { 
-                        $this->cachedResults[$rule->getId()][$quote->getId()] = $rule->validate($address);
-                    } catch (Exception $e){
-                        $this->cachedResults[$rule->getId()][$quote->getId()] = false;
-                        Mage::logException($e);
-                    }
-                }
-                if ($this->cachedResults[$rule->getId()][$quote->getId()]){
-                    return true;
+
+            //@todo use the default configuration and also make sure we handle the useInteral configuration etc.
+            $finalResult = false;
+
+            //@todo do not process enable before disable, let it depend on the sort_order of the rules.
+            /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
+            $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
+            $ruleCollection->getRules($quote->getStore()->getWebsiteId(), $method, 'enable', $methodType, $quote->getCustomerGroupId());
+            if ($this->rulesMatch($ruleCollection, $quote)) {
+                $finalResult = true;
+            }
+
+            /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
+            $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
+            $ruleCollection->getRules($quote->getStore()->getWebsiteId(), $method, 'disable', $methodType, $quote->getCustomerGroupId());
+            if ($this->rulesMatch($ruleCollection, $quote)) {
+                $finalResult = false;
+            }
+
+            $this->_cachedMethodResults[$methodType][$method][$quote->getId()] = $finalResult;
+        }
+        $result->isAvailable = $this->_cachedMethodResults[$methodType][$method][$quote->getId()];
+    }
+
+    /**
+     * @param $rules Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection
+     * @param $quote Mage_Sales_Model_Quote
+     *
+     * @return bool
+     */
+    public function rulesMatch($rules, $quote)
+    {
+        if ($quote->isVirtual()) {
+            $address = $quote->getBillingAddress();
+        } else {
+            $address = $quote->getShippingAddress();
+        }
+        foreach ($rules as $rule) {
+            /** @var $rule Quanbit_QBShippingAndPaymentFilters_Model_Rule */
+            if (!isset($this->_cachedResults[$rule->getId()][$quote->getId()])) {
+                $rule->afterLoad();
+                try {
+                    $this->_cachedResults[$rule->getId()][$quote->getId()] = $rule->validate($address);
+                } catch (Exception $e) {
+                    $this->_cachedResults[$rule->getId()][$quote->getId()] = false;
+                    Mage::logException($e);
                 }
             }
-            return false;
+            if ($this->_cachedResults[$rule->getId()][$quote->getId()]) {
+                return true;
+            }
         }
-        public function shouldCheck($event){
-            return $event->getQuote()!=null;
-        }
-	/**
-	 * Filters the payment method if it's not enabled
-	 *
-	 * @param Varien_Event_Observer $observer
-	 */
-        public function paymentMethods(Varien_Event_Observer $observer){
-            $this->applyRules($observer, "payment", $this->getPaymentCode($observer));
-        }
-        public function getPaymentCode($observer){
-            return $observer->getEvent()->getMethodInstance()->getCode();
-        }
-        /**
-	 * Filters the shipping method if it's not enabled
-	 *
-	 * @param Varien_Event_Observer $observer
-	 */
-	public function shippingMethods(Varien_Event_Observer $observer)
-	{
-             $this->applyRules($observer, "shipping", $this->getShippingCode($observer));
-	}
-        public function getShippingCode($observer){
-            return $observer->getEvent()->getCarrierCode();
-        }
-        public function applyRules($observer, $method_type, $method)
-	{
-             $event = $observer->getEvent();
-             if (!$this->shouldCheck($event)) return;
-             $data =  $event ->getData();
-             $quote = $data["quote"];
-             if (!isset($this->cachedMethodResults[$method_type][$method][$quote->getId()])){
-                foreach ($quote->getAllItems() as $item){
-                    $item->setData('product',null);
-                }
-                $website_id = $quote->getStore()->getWebsiteId();
-                $result = $event->getResult();
-                $rules = $this->getRulesFor($website_id, $method, "disable", $method_type);
-                if ($this->rulesMatch($rules, $quote)){
-                    $finalResult=false;
-                }
-                $rules = $this->getRulesFor($website_id, $method, "enable", $method_type);
-                if ($this->rulesMatch($rules, $quote)){
-                    $finalResult=true;
-                }
-                $this->cachedMethodResults[$method_type][$method][$quote->getId()] = $finalResult;
-             }
-             $result->isAvailable = $this->cachedMethodResults[$method_type][$method][$quote->getId()];
-	}	
+        return false;
+    }
+
 }
