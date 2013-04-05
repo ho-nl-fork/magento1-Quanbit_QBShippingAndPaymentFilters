@@ -1,0 +1,3 @@
+app/code/community/Quanbit/*                    app/code/community/Quanbit/
+app/design/adminhtml/default/default/layout/*   app/design/adminhtml/default/default/layout/
+app/etc/modules/*                               app/etc/modules/
