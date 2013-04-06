@@ -24,7 +24,6 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
      */
     public function shippingMethods(Varien_Event_Observer $observer)
     {
-        var_dump($observer->getEvent());
         $method = $observer->getEvent()->getCarrierCode();
         $this->applyRules($observer, "shipping", $method);
     }
@@ -57,14 +56,14 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
             //@todo do not process enable before disable, let it depend on the sort_order of the rules.
             /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
             $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
-            $ruleCollection->getRules($quote->getStore()->getWebsiteId(), $method, 'enable', $methodType, $quote->getCustomerGroupId());
+            $ruleCollection->getRules($websiteId, $method, 'enable', $methodType, $quote->getCustomerGroupId());
             if ($this->rulesMatch($ruleCollection, $quote)) {
                 $finalResult = true;
             }
 
             /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
             $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
-            $ruleCollection->getRules($quote->getStore()->getWebsiteId(), $method, 'disable', $methodType, $quote->getCustomerGroupId());
+            $ruleCollection->getRules($websiteId, $method, 'disable', $methodType, $quote->getCustomerGroupId());
             if ($this->rulesMatch($ruleCollection, $quote)) {
                 $finalResult = false;
             }
