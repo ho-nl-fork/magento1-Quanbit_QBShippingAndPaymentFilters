@@ -40,8 +40,8 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection extends M
 
         $this->addFieldToFilter('is_active', 1);
         $this->addFieldToFilter('simple_action', $action.'_'.$methodType.'_method');
-        $this->getSelect()->where('FIND_IN_SET(?, website_ids)', $websiteId);
-        $this->getSelect()->where('FIND_IN_SET(?, customer_group_ids)', $customerGroupId);
+        $this->getSelect()->where('FIND_IN_SET(?, website_ids)', (int) $websiteId);
+        $this->getSelect()->where('FIND_IN_SET(?, customer_group_ids)', (int) $customerGroupId);
         $this->getSelect()->where($methodType.'_methods_ids like ?', "%".$methodId."%");
         $this->getSelect()->where('from_date is null or from_date<=?', $now);
         $this->getSelect()->where('to_date is null or to_date>=?', $now);
