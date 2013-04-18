@@ -39,6 +39,11 @@
                     </label>
                 </entities>
             </checkoutrule_mysql4>
+            <salesrule>
+                <rewrite>
+                    <rule_condition_address>Quanbit_QBShippingAndPaymentFilters_Model_SalesRule_Rule_Condition_Address</rule_condition_address>
+                </rewrite>
+            </salesrule>
         </models>
         <helpers>
             <checkoutrule>
