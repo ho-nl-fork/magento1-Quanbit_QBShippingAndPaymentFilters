@@ -11,20 +11,7 @@
                 <setup>
                     <module>Quanbit_QBShippingAndPaymentFilters</module>
                 </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
             </qbshippingandpaymentfilters_setup>
-            <qbshippingandpaymentfilters_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
-            </qbshippingandpaymentfilters_write>
-            <qbshippingandpaymentfilters_read>
-                <connection>
-                    <use>core_read</use>
-                </connection>
-            </qbshippingandpaymentfilters_read>            
         </resources>              
         <models>
             <shipping>
@@ -96,32 +83,6 @@
         </routers>
     </admin>
     <adminhtml>
-        <menu>
-            <promo>
-                <children>
-                    <checkoutrule module="checkoutrule">
-                        <title>Checkout Rules</title>
-                        <sort_order>75</sort_order>               
-                        <action>checkoutrule/promo_checkoutrule</action>
-                    </checkoutrule>
-                </children>
-            </promo>
-        </menu>
-        <acl>
-            <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
-                <admin>
-                    <children>
-                        <Quanbit_QBShippingAndPaymentFilters>
-                            <title>Quanbit_QBShippingAndPaymentFilters Module</title>
-                            <sort_order>10</sort_order>
-                        </Quanbit_QBShippingAndPaymentFilters>
-                    </children>
-                </admin>
-            </resources>
-        </acl>
         <layout>
             <updates>
                 <checkoutrule>
