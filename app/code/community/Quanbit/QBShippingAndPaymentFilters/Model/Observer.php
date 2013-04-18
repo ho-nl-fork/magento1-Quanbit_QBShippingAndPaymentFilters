@@ -1,5 +1,5 @@
 <?php
-class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
+class Quanbit_QBShippingAndPaymentFilters_Model_Observer
 {
     protected $_cachedMethodResults = array();
 
@@ -13,6 +13,12 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
      */
     public function paymentMethods(Varien_Event_Observer $observer)
     {
+        $result = $observer->getEvent()->getResult();
+
+        if ($result->isDeniedInConfig) {
+            return;
+        }
+
         $method = $observer->getEvent()->getMethodInstance()->getCode();
         $this->applyRules($observer, "payment", $method);
     }
@@ -24,6 +30,8 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
      */
     public function shippingMethods(Varien_Event_Observer $observer)
     {
+        $result = $observer->getEvent()->getResult();
+
         $method = $observer->getEvent()->getCarrierCode();
         $this->applyRules($observer, "shipping", $method);
     }
@@ -32,45 +40,46 @@ class Quanbit_QBShippingAndPaymentFilters_Model_Observer_Filter
     /**
      * @param $observer
      * @param $methodType
-     * @param $method
+     * @param $methodName
      */
-    public function applyRules($observer, $methodType, $method)
+    public function applyRules($observer, $methodType, $methodName)
     {
         $event = $observer->getEvent();
-        if ($event->getQuote() == null) {
+        if ($event->getQuote() === null) {
             return;
         }
-        /** @var $quote Mage_Sales_Model_Quote */
-        $quote = $event->getQuote();
-        $websiteId  = $quote->getStore()->getWebsiteId();
-        $result = $event->getResult();
 
-        if (!isset($this->_cachedMethodResults[$methodType][$method][$quote->getId()])) {
+        /** @var $quote Mage_Sales_Model_Quote */
+        $quote      = $event->getQuote();
+        $websiteId  = $quote->getStore()->getWebsiteId();
+        $result     = $event->getResult();
+
+        if (!isset($this->_cachedMethodResults[$methodType][$methodName][$quote->getId()])) {
             foreach ($quote->getAllItems() as $item) {
                 $item->setData('product', null);
             }
 
             //@todo use the default configuration and also make sure we handle the useInteral configuration etc.
-            $finalResult = false;
+            $finalResult = $result->isAvailable;
 
             //@todo do not process enable before disable, let it depend on the sort_order of the rules.
             /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
             $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
-            $ruleCollection->getRules($websiteId, $method, 'enable', $methodType, $quote->getCustomerGroupId());
+            $ruleCollection->getRules($websiteId, $methodName, 'enable', $methodType, $quote->getCustomerGroupId());
             if ($this->rulesMatch($ruleCollection, $quote)) {
                 $finalResult = true;
             }
 
             /** @var $ruleCollection Quanbit_QBShippingAndPaymentFilters_Model_Mysql4_Rule_Collection */
             $ruleCollection = Mage::getResourceModel("checkoutrule/rule_collection");
-            $ruleCollection->getRules($websiteId, $method, 'disable', $methodType, $quote->getCustomerGroupId());
+            $ruleCollection->getRules($websiteId, $methodName, 'disable', $methodType, $quote->getCustomerGroupId());
             if ($this->rulesMatch($ruleCollection, $quote)) {
                 $finalResult = false;
             }
 
-            $this->_cachedMethodResults[$methodType][$method][$quote->getId()] = $finalResult;
+            $this->_cachedMethodResults[$methodType][$methodName][$quote->getId()] = $finalResult;
         }
-        $result->isAvailable = $this->_cachedMethodResults[$methodType][$method][$quote->getId()];
+        $result->isAvailable = $this->_cachedMethodResults[$methodType][$methodName][$quote->getId()];
     }
 
     /**

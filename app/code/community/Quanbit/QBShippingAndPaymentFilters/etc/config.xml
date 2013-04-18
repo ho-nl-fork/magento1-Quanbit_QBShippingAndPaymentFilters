@@ -68,7 +68,7 @@
             <observers>
               <quanbit_qbshippingandpaymentfilters_filterpaymentmethods>
                 <type>singleton</type>
-                <class>checkoutrule/observer_filter</class>
+                <class>checkoutrule/observer</class>
                 <method>paymentMethods</method>
               </quanbit_qbshippingandpaymentfilters_filterpaymentmethods>
             </observers>
@@ -77,7 +77,7 @@
             <observers>
               <quanbit_qbshippingandpaymentfilters_filterpaymentmethods>
                 <type>singleton</type>
-                <class>checkoutrule/observer_filter</class>
+                <class>checkoutrule/observer</class>
                 <method>shippingMethods</method>
               </quanbit_qbshippingandpaymentfilters_filterpaymentmethods>
             </observers>
