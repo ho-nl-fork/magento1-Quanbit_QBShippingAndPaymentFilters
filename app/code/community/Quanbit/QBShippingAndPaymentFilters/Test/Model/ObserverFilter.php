@@ -4,7 +4,7 @@ class Quanbit_QBShippingAndPaymentFilters_Test_Model_ObserverFilter extends Ecom
 
   public function setUp(){
       parent::setUp();
-      $this->observer = Mage::getModel('checkoutrule/observer_filter');
+      $this->observer = Mage::getModel('checkoutrule/observer');
   }
   public function getQuoteFor($quote_id){
       $q = Mage::getModel('sales/quote');

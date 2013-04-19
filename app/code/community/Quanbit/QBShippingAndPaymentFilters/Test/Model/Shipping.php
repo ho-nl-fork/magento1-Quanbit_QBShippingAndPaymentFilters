@@ -5,12 +5,12 @@ class Quanbit_QBShippingAndPaymentFilters_Test_Model_Shipping extends EcomDev_PH
   public function setUp(){
       parent::setUp();
       $this->shipping = Mage::getModel('shipping/shipping');
-      $this->observer = $this->getModelMock('checkoutrule/observer_filter', array('shippingMethods'));
+      $this->observer = $this->getModelMock('checkoutrule/observer', array('shippingMethods'));
       $this->observer->expects(
               $this->any())->method('shippingMethods')->
                   will(
                           $this->returnCallback(array($this,'processShippingMethods')));
-      $this->replaceByMock('model', 'checkoutrule/observer_filter', $this->observer);
+      $this->replaceByMock('model', 'checkoutrule/observer', $this->observer);
       
   }
   public function processShippingMethods($observer){
