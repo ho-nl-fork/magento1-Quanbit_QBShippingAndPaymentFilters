@@ -1,0 +1,18 @@
+{
+    "name": "quanbit/qbshippingandpaymentfilters",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "QBShippingAndPaymentFilters is a module of Magento. This Module allows you set up rules to enable or disable payment and shipping methods, based on the content’s of the checkout cart (e.g. you can disallow “Personal Delivery” for orders to be shipped outside your city or enable Paypal payment only to people who bought from you products from the …",
+	"website": "http://research.quanbit.com/magento/qbshippingandpaymentfilters/",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "require-dev": {        
+    },
+    "authors":[
+        {
+            "name":"quanbit"
+        }
+    ]
+	
+}
