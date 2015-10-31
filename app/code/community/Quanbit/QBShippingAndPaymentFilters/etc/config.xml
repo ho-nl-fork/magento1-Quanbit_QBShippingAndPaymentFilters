@@ -76,17 +76,21 @@
           </shipping_carrier_is_active>
           </events>
     </global>
+
+
     <admin>
         <routers>
-            <checkoutrule>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Quanbit_QBShippingAndPaymentFilters</module>
-                    <frontName>checkoutrule</frontName>
+                    <modules>
+                        <checkoutrule before="Mage_Adminhtml">Quanbit_QBShippingAndPaymentFilters_Adminhtml</checkoutrule>
+                    </modules>
                 </args>
-            </checkoutrule>
+            </adminhtml>
         </routers>
     </admin>
+
+
     <adminhtml>
         <layout>
             <updates>

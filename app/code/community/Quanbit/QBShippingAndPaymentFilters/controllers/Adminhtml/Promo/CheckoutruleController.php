@@ -25,7 +25,7 @@
  */
 
 
-class Quanbit_QBShippingAndPaymentFilters_Promo_CheckoutruleController extends Mage_Adminhtml_Controller_Action
+class Quanbit_QBShippingAndPaymentFilters_Adminhtml_Promo_CheckoutruleController extends Mage_Adminhtml_Controller_Action
 {
     protected function _initRule()
     {
