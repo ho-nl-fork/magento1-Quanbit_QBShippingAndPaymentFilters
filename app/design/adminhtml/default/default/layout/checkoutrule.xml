@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <layout>
-    <checkoutrule_promo_checkoutrule_index>
-        <reference name="content">      
-            <block type="checkoutrule/promo_checkoutrule" name="promo_checkoutrule"/> 
+    <adminhtml_promo_checkoutrule_index>
+        <reference name="content">
+            <block type="checkoutrule/promo_checkoutrule" name="promo_checkoutrule"/>
         </reference>
-    </checkoutrule_promo_checkoutrule_index>
-    <checkoutrule_promo_checkoutrule_edit>
+    </adminhtml_promo_checkoutrule_index>
+    <adminhtml_promo_checkoutrule_edit>
         <reference name="head">
             <action method="setCanLoadExtJs"><flag>1</flag></action>
             <action method="setCanLoadRulesJs"><flag>1</flag></action>
@@ -25,5 +25,5 @@
         <reference name="content">
             <block type="checkoutrule/promo_checkoutrule_edit" name="promo_checkoutrule_edit"></block>
         </reference>
-    </checkoutrule_promo_checkoutrule_edit>
+    </adminhtml_promo_checkoutrule_edit>
 </layout>
