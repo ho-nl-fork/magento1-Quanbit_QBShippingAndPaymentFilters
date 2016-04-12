@@ -29,7 +29,7 @@
                 <checkoutrule translate="title" module="checkoutrule">
                     <title>Checkout Rules</title>
                     <sort_order>75</sort_order>
-                    <action>checkoutrule/promo_checkoutrule</action>
+                    <action>*/promo_checkoutrule</action>
                 </checkoutrule>
             </children>
         </promo>
